@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo de Filmes Cadastrados</title>
+    <link rel="stylesheet" href="{% static 'filmes/style.css' %}" />
+  </head>
+  <body>
+    <header>
+      <h1>Catálogo de Filmes</h1>
+      <div class="actions">
+        <a href="{%url 'criar_filme' %}" class="btn-novo">Novo Filme</a>
+      </div>
+    </header>
+
+    <ul class="lista-filmes"> {# APLIQUE A CLASSE AQUI #}
+      {% for filme in filmes %}
+      <li class="filme-card"> {# MUDANÇA DE NOME DE CLASSE PARA MAIS CLAREZA #}
+        <img src="{{filme.capa}}" alt="Capa do filme {{ filme.titulo }}">
+        <div class="filme-info">
+          <h3>{{ filme.titulo }}</h3>
+          <p>Ano: {{ filme.ano }}</p>
+          <p>Gênero: {{ filme.genero }}</p>
+        </div>
+        <div class="filme-actions">
+          <a href="{% url 'atualizar_filme' filme.pk %}" class="btn-editar">Editar</a>
+          <a href="{% url 'deletar_filme' filme.pk %}" class="btn-deletar">Deletar</a>
+        </div>
+      </li>
+      {% empty %}
+      <li class="no-filmes">Nenhum filme cadastrado.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
